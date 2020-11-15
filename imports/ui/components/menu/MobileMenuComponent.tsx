@@ -11,11 +11,11 @@ import { IonReactRouter } from "@ionic/react-router";
 import { search, restaurant, heart, map, person } from "ionicons/icons";
 
 import RouteComponent from "./RouteComponent";
-import LoginModalComponent from "../login/LoginModalComponent";
-import Context from "../../store/context";
+import { ModalContext } from "../../store/ModalContext";
+import Login from "../account/Login";
 
 const MobileMenuComponent: React.FC = () => {
-  const { state, actions } = useContext(Context);
+  const { modalState, setModalState } = useContext(ModalContext);
 
   return (
     <IonReactRouter>
@@ -43,10 +43,7 @@ const MobileMenuComponent: React.FC = () => {
           <IonTabButton tab="user" href="">
             <div
               onClick={() =>
-                actions({
-                  type: "setShowModal",
-                  payload: { ...state, showModal: true },
-                })
+                setModalState({ state: true, component: <Login /> })
               }
             >
               <IonIcon color="dark" icon={person} />

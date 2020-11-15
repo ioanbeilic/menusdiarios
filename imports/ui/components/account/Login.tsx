@@ -8,11 +8,11 @@ import {
   IonRow,
 } from "@ionic/react";
 import { Accounts } from "meteor/accounts-base";
-import { Meteor } from "meteor/meteor";
 
 import React, { useState } from "react";
+import { Meteor } from "meteor/meteor";
 
-export const LoginForm: React.FC = () => {
+export const Login: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -20,9 +20,18 @@ export const LoginForm: React.FC = () => {
     let user = Accounts.findUserByEmail(email);
     if (!!user) {
       // user exist login
-      Meteor.loginWithPassword(email, password);
+
+      console.log(Accounts);
+      Meteor.loginWithPassword(email, password, (err) => {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log(Meteor.userId());
+        }
+      });
     } else {
       // user not exist - creating
+      console.log("The user does not exist");
     }
   };
 
@@ -68,4 +77,4 @@ export const LoginForm: React.FC = () => {
   );
 };
 
-export default LoginForm;
+export default Login;
