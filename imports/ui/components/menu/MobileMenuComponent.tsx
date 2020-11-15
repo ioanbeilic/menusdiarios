@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useState } from "react";
+import React, { useContext } from "react";
 import {
   IonIcon,
   IonLabel,
@@ -12,7 +12,7 @@ import { search, restaurant, heart, map, person } from "ionicons/icons";
 
 import RouteComponent from "./RouteComponent";
 import { ModalContext } from "../../store/ModalContext";
-import Login from "../account/Login";
+import AuthPage from "../../pages/AuthPage";
 
 const MobileMenuComponent: React.FC = () => {
   const { modalState, setModalState } = useContext(ModalContext);
@@ -43,7 +43,7 @@ const MobileMenuComponent: React.FC = () => {
           <IonTabButton tab="user" href="">
             <div
               onClick={() =>
-                setModalState({ state: true, component: <Login /> })
+                setModalState({ state: true, component: <AuthPage /> })
               }
             >
               <IonIcon color="dark" icon={person} />

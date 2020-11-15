@@ -6,37 +6,33 @@ import {
   IonItem,
   IonLabel,
   IonRow,
+  IonImg,
 } from "@ionic/react";
 import { Accounts } from "meteor/accounts-base";
 
 import React, { useState } from "react";
 import { Meteor } from "meteor/meteor";
+import { StyledLogin } from "../../elements/StyledLogin";
 
 export const Login: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const userHandler = () => {
-    let user = Accounts.findUserByEmail(email);
-    if (!!user) {
-      // user exist login
+    console.log(Accounts);
+    // user exist login
 
-      console.log(Accounts);
-      Meteor.loginWithPassword(email, password, (err) => {
-        if (err) {
-          console.log(err);
-        } else {
-          console.log(Meteor.userId());
-        }
-      });
-    } else {
-      // user not exist - creating
-      console.log("The user does not exist");
-    }
+    Meteor.loginWithPassword(email, password, (err) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log(Meteor.userId());
+      }
+    });
   };
 
   return (
-    <IonContent>
+    <StyledLogin>
       <form>
         <IonItem lines="full">
           <IonLabel position="floating">Email</IonLabel>
@@ -67,13 +63,10 @@ export const Login: React.FC = () => {
             >
               Sign In
             </IonButton>
-            <a href="/forgot-password" className="small-text">
-              Forgot Password?
-            </a>
           </IonCol>
         </IonRow>
       </form>
-    </IonContent>
+    </StyledLogin>
   );
 };
 
