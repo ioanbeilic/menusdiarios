@@ -10,15 +10,7 @@ interface ContextProps {
   setModalState: (modalState: ModalStateType) => void;
 }
 
-const initialState = {
-  modalState: {
-    state: false,
-    component: null,
-  },
-  setModalState: () => console.log("modal state"),
-};
-
-export const ModalContext = createContext<ContextProps>(initialState);
+export const ModalContext = createContext({} as ContextProps);
 
 const ModalContextProvider = (props: any) => {
   const [modalState, setModalState] = useState({

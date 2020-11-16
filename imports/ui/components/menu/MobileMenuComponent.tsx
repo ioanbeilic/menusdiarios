@@ -13,6 +13,7 @@ import { search, restaurant, heart, map, person } from "ionicons/icons";
 import RouteComponent from "./RouteComponent";
 import { ModalContext } from "../../store/ModalContext";
 import AuthPage from "../../pages/AuthPage";
+import { Meteor } from "meteor/meteor";
 
 const MobileMenuComponent: React.FC = () => {
   const { modalState, setModalState } = useContext(ModalContext);
@@ -25,6 +26,8 @@ const MobileMenuComponent: React.FC = () => {
     textAlign: "center",
   };
 
+  console.log(Meteor.userId());
+
   return (
     <IonReactRouter>
       <IonTabs>
@@ -32,42 +35,52 @@ const MobileMenuComponent: React.FC = () => {
           <RouteComponent />
         </IonRouterOutlet>
         <IonTabBar slot="bottom">
-          <IonTabButton tab="Restaurant" href="/index">
+          <IonTabButton tab="restaurant" href="/index">
             <IonIcon icon={restaurant} />
             <IonLabel>Restaurants</IonLabel>
           </IonTabButton>
-          <IonTabButton tab="Favorite" href="/favorites">
+          <IonTabButton tab="favorite" href="/favorites">
             <IonIcon color="danger" icon={heart} />
             <IonLabel>Favorites</IonLabel>
           </IonTabButton>
-          <IonTabButton tab="Search" href="/search">
+          <IonTabButton tab="search" href="/search">
             <IonIcon color="success" icon={search} />
             <IonLabel>Search</IonLabel>
           </IonTabButton>
-          <IonTabButton tab="Map" href="/search">
+          <IonTabButton tab="map" href="/map">
             <IonIcon color="info" icon={map} />
             <IonLabel>Map</IonLabel>
           </IonTabButton>
-          <IonTabButton tab="user" href="#">
-            <div
-              className="button-inner"
-              onClick={() =>
-                setModalState({ state: true, component: <AuthPage /> })
-              }
-              style={userBtn}
-            >
-              <IonIcon
-                style={{
-                  fontSize: "2.7em",
-                  marginBottom: "2px",
-                  marginTop: "5px",
-                }}
-                color="dark"
-                icon={person}
-              />
-              <IonLabel style={{ fontSize: "12px" }}>User</IonLabel>
-            </div>
-          </IonTabButton>
+
+          {!Meteor.userId() ? (
+            <IonTabButton tab="user" href="#">
+              <div
+                className="button-inner"
+                onClick={() =>
+                  setModalState({ state: true, component: <AuthPage /> })
+                }
+                style={userBtn}
+              >
+                <IonIcon
+                  style={{
+                    fontSize: "2.7em",
+                    marginBottom: "2px",
+                    marginTop: "5px",
+                    marginLeft: "10px",
+                  }}
+                  icon={person}
+                />
+                <IonLabel style={{ fontSize: "12px", textAlign: "center" }}>
+                  Account
+                </IonLabel>
+              </div>
+            </IonTabButton>
+          ) : (
+            <IonTabButton tab="profile" href="/profile">
+              <IonIcon icon={person} />
+              <IonLabel>Profile</IonLabel>
+            </IonTabButton>
+          )}
         </IonTabBar>
       </IonTabs>
     </IonReactRouter>

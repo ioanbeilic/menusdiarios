@@ -8,6 +8,7 @@ Meteor.startup(() => {
   // If the Links collection is empty, add some data.
   const user = Meteor.users.findOne({ email: SEED_EMAIL });
 
+  console.log(user);
   if (!!user) {
     Accounts.createUser({
       email: SEED_EMAIL,

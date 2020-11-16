@@ -20,16 +20,12 @@ export const UserCollection = new Mongo.Collection<User>("users");
 
 Meteor.methods({
   "user.login": ({ email, password }) => {
-    let userExist: boolean;
-
     const user = Accounts.findUserByEmail(email);
 
-    userExist = !!user;
-
-    if (userExist) {
+    if (!!user) {
       console.log("user exist", user);
     } else {
-      // create user
+      // croeate user
     }
   },
 });

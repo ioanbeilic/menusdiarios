@@ -9,19 +9,43 @@ import {
 } from "@ionic/react";
 import { Accounts } from "meteor/accounts-base";
 
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { ToastContext } from "../../store/ToastContext";
 
 export const Register: React.FC = () => {
+  const { toastState, setToastState } = useContext(ToastContext);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const register = () => {
     // user not exist - creating
-    Accounts.createUser({ email, password }, function (err) {
-      if (err) {
-        console.log("Create user error", err);
-      }
-    });
+
+    const user = Accounts.findUserByEmail(email);
+
+    if (user) {
+      setToastState({
+        isOpen: true,
+        message: "Email already exist",
+        position: "bottom",
+        duration: 1000,
+        color: "danger",
+      });
+    } else {
+      Accounts.createUser({ email, password }, function (err) {
+        if (err) {
+          console.log("Create user error", err);
+          setToastState({
+            isOpen: true,
+            // @ts-ignore
+            message: err.reason,
+            position: "bottom",
+            duration: 1000,
+            color: "danger",
+          });
+        }
+      });
+    }
   };
 
   return (

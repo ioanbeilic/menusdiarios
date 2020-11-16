@@ -7,13 +7,17 @@ import {
   IonRow,
 } from "@ionic/react";
 
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Meteor } from "meteor/meteor";
 import { StyledLogin } from "../../elements/StyledLogin";
+import { ModalContext } from "../../store/ModalContext";
 
 export const Login: React.FC = () => {
+  const { modalState, setModalState } = useContext(ModalContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  console.log(Meteor.userId());
 
   const userHandler = () => {
     // user exist login
@@ -22,6 +26,7 @@ export const Login: React.FC = () => {
       if (err) {
         console.log(err);
       } else {
+        setModalState({ state: false, component: null });
         console.log(Meteor.userId());
       }
     });

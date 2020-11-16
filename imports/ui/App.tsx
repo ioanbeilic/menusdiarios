@@ -8,6 +8,8 @@ import MobileMenuComponent from "./components/menu/MobileMenuComponent";
 import ModalContextProvider from "./store/ModalContext";
 import { ModalComponent } from "./components/shared/ModalConponent";
 import { useWindowSize } from "./components/shared/windowResize";
+import ToastContextProvider from "./store/ToastContext";
+import { ToastComponent } from "./components/shared/ToastComponent";
 
 export const App: React.FC = () => {
   const [width] = useWindowSize();
@@ -15,11 +17,14 @@ export const App: React.FC = () => {
 
   console.log(user);
   return (
-    <ModalContextProvider>
-      <IonApp>
-        <ModalComponent />
-        {width > 500 ? <DesktopMenuComponent /> : <MobileMenuComponent />}
-      </IonApp>
-    </ModalContextProvider>
+    <IonApp>
+      <ModalContextProvider>
+        <ToastContextProvider>
+          <ToastComponent />
+          <ModalComponent />
+          {width > 500 ? <DesktopMenuComponent /> : <MobileMenuComponent />}
+        </ToastContextProvider>
+      </ModalContextProvider>
+    </IonApp>
   );
 };
