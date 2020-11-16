@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { CSSProperties, useContext } from "react";
 import {
   IonIcon,
   IonLabel,
@@ -16,6 +16,14 @@ import AuthPage from "../../pages/AuthPage";
 
 const MobileMenuComponent: React.FC = () => {
   const { modalState, setModalState } = useContext(ModalContext);
+
+  const userBtn: CSSProperties = {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    justifyItems: "center",
+    textAlign: "center",
+  };
 
   return (
     <IonReactRouter>
@@ -40,14 +48,24 @@ const MobileMenuComponent: React.FC = () => {
             <IonIcon color="info" icon={map} />
             <IonLabel>Map</IonLabel>
           </IonTabButton>
-          <IonTabButton tab="user" href="">
+          <IonTabButton tab="user" href="#">
             <div
+              className="button-inner"
               onClick={() =>
                 setModalState({ state: true, component: <AuthPage /> })
               }
+              style={userBtn}
             >
-              <IonIcon color="dark" icon={person} />
-              <IonLabel>User</IonLabel>
+              <IonIcon
+                style={{
+                  fontSize: "2.7em",
+                  marginBottom: "2px",
+                  marginTop: "5px",
+                }}
+                color="dark"
+                icon={person}
+              />
+              <IonLabel style={{ fontSize: "12px" }}>User</IonLabel>
             </div>
           </IonTabButton>
         </IonTabBar>

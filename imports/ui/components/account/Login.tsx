@@ -1,14 +1,11 @@
 import {
-  IonContent,
   IonButton,
   IonCol,
   IonInput,
   IonItem,
   IonLabel,
   IonRow,
-  IonImg,
 } from "@ionic/react";
-import { Accounts } from "meteor/accounts-base";
 
 import React, { useState } from "react";
 import { Meteor } from "meteor/meteor";
@@ -19,7 +16,6 @@ export const Login: React.FC = () => {
   const [password, setPassword] = useState("");
 
   const userHandler = () => {
-    console.log(Accounts);
     // user exist login
 
     Meteor.loginWithPassword(email, password, (err) => {
@@ -40,6 +36,7 @@ export const Login: React.FC = () => {
             type="email"
             required
             name="email"
+            autocomplete="off"
             onIonChange={(e) => setEmail(e.detail.value!)}
           ></IonInput>
         </IonItem>
@@ -50,6 +47,7 @@ export const Login: React.FC = () => {
             name="password"
             onIonChange={(e) => setPassword(e.detail.value!)}
             type="password"
+            autocomplete="off"
             required
           ></IonInput>
         </IonItem>

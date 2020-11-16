@@ -18,12 +18,37 @@ export const AuthPage: React.FC = () => {
       {showLogin ? <Login /> : <Register />}
 
       <div className="buttons">
-        <IonButton fill="clear" className="small-text">
+        <IonButton
+          fill="clear"
+          onClick={() => {
+            setShowLogin(false);
+            setShowForgerPassword(true);
+          }}
+          className="small-text"
+        >
           Forgot Password?
         </IonButton>
-        <IonButton fill="clear" className="small-text">
-          Register
-        </IonButton>
+        {showLogin ? (
+          <IonButton
+            onClick={() => {
+              setShowLogin(false);
+            }}
+            fill="clear"
+            className="small-text"
+          >
+            Register
+          </IonButton>
+        ) : (
+          <IonButton
+            onClick={() => {
+              setShowLogin(true);
+            }}
+            fill="clear"
+            className="small-text"
+          >
+            Login
+          </IonButton>
+        )}
       </div>
     </StyledAuth>
   );
