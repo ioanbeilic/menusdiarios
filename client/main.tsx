@@ -22,18 +22,6 @@ import "@ionic/react/css/display.css";
 /* Theme variables */
 import "./theme/variables.css";
 
-import useGlobalState from "../imports/ui/store/useGlobalState";
-import Context from "../imports/ui/store/context";
-
-const Index = () => {
-  const store = useGlobalState();
-  return (
-    <Context.Provider value={store}>
-      <App />
-    </Context.Provider>
-  );
-};
-
 Meteor.startup(() => {
-  render(<Index />, document.getElementById("root"));
+  render(<App />, document.getElementById("root"));
 });
