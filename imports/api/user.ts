@@ -24,8 +24,28 @@ Meteor.methods({
 
     if (!!user) {
       console.log("user exist", user);
+      return true;
+      // login user
     } else {
-      // croeate user
+      // create user
+      Accounts.createUser({
+        email,
+        password,
+      });
+    }
+  },
+  "user.register": ({ email, password }) => {
+    const user = Accounts.findUserByEmail(email);
+    if (!!user) {
+      console.log("user exist", user);
+      return true;
+      // login user
+    } else {
+      // create user
+      Accounts.createUser({
+        email,
+        password,
+      });
     }
   },
 });

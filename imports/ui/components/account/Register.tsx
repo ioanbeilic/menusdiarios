@@ -8,12 +8,15 @@ import {
   IonRow,
 } from "@ionic/react";
 import { Accounts } from "meteor/accounts-base";
+import { Meteor } from "meteor/meteor";
 
 import React, { useContext, useState } from "react";
+import { ModalContext } from "../../store/ModalContext";
 import { ToastContext } from "../../store/ToastContext";
 
 export const Register: React.FC = () => {
   const { toastState, setToastState } = useContext(ToastContext);
+  const { modalState, setModalState } = useContext(ModalContext);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -32,19 +35,24 @@ export const Register: React.FC = () => {
         color: "danger",
       });
     } else {
-      Accounts.createUser({ email, password }, function (err) {
-        if (err) {
-          console.log("Create user error", err);
-          setToastState({
-            isOpen: true,
-            // @ts-ignore
-            message: err.reason,
-            position: "bottom",
-            duration: 1000,
-            color: "danger",
-          });
+      Meteor.call(
+        "user.register",
+        { email, password },
+        (err: any, res: any) => {
+          if (err) {
+            setToastState({
+              isOpen: true,
+              // @ts-ignore
+              message: err.reason,
+              position: "bottom",
+              duration: 1000,
+              color: "danger",
+            });
+          } else {
+            setModalState({ state: false, component: null });
+          }
         }
-      });
+      );
     }
   };
 

@@ -22,7 +22,7 @@ export const App: React.FC = () => {
         <ToastContextProvider>
           <ToastComponent />
           <ModalComponent />
-          {width > 500 ? <DesktopMenuComponent /> : <MobileMenuComponent />}
+          {width > 700 ? <DesktopMenuComponent /> : <MobileMenuComponent />}
         </ToastContextProvider>
       </ModalContextProvider>
     </IonApp>

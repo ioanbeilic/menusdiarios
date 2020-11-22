@@ -11,23 +11,42 @@ import React, { useContext, useState } from "react";
 import { Meteor } from "meteor/meteor";
 import { StyledLogin } from "../../elements/StyledLogin";
 import { ModalContext } from "../../store/ModalContext";
+import { ToastContext } from "../../store/ToastContext";
 
 export const Login: React.FC = () => {
+  const { toastState, setToastState } = useContext(ToastContext);
   const { modalState, setModalState } = useContext(ModalContext);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  console.log(Meteor.userId());
 
   const userHandler = () => {
     // user exist login
 
-    Meteor.loginWithPassword(email, password, (err) => {
+    Meteor.call("user.login", { email, password }, (err: any) => {
       if (err) {
-        console.log(err);
+        setToastState({
+          isOpen: true,
+          // @ts-ignore
+          message: err.reason,
+          position: "bottom",
+          duration: 1000,
+          color: "danger",
+        });
       } else {
+        Meteor.loginWithPassword(email, password, (err) => {
+          if (err) {
+            setToastState({
+              isOpen: true,
+              // @ts-ignore
+              message: err.reason,
+              position: "bottom",
+              duration: 1000,
+              color: "danger",
+            });
+          }
+        });
         setModalState({ state: false, component: null });
-        console.log(Meteor.userId());
       }
     });
   };
