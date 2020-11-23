@@ -1,4 +1,5 @@
-import { Mongo } from 'meteor/mongo';
+import { Meteor } from "meteor/meteor";
+import { Mongo } from "meteor/mongo";
 
 export interface Link {
   _id?: string;
@@ -7,4 +8,14 @@ export interface Link {
   createdAt: Date;
 }
 
-export const LinksCollection = new Mongo.Collection<Link>('links');
+export const LinksCollection = new Mongo.Collection<Link>("links");
+
+if (Meteor.isServer) {
+  Meteor.publish("links", () => {
+    return LinksCollection.find({});
+  });
+}
+
+Meteor.methods({
+  "links.insert": (data) => {},
+});
